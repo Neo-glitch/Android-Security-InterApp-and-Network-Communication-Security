@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- config for all requests except for that in domain tag  & clear text means https conn-->
+    <base-config cleartextTrafficPermitted="false"></base-config>
+
+    <!--  config for domain specified only  -->
+    <domain-config>
+        <domain includeSubdomains="true">example.com</domain>
+        <!--   for trusting custom cert in src     -->
+        <trust-anchors>
+            <certificates src="@raw/certificate" />
+        </trust-anchors>
+        <pin-set expiration="2020-01-01">
+            <!-- any of pin specified here must be in certificate from CA else https handshake fails  -->
+            <pin digest="SHA-256">7HIpactkIAq2Y49orFOOQKurWxmmSFZhBCoQYcRhJ3Y=</pin>
+            <!-- backup pin to allow switching to new key inCase prim cert expires-->
+            <pin digest="SHA-256">fwza0LRMXouZHRC8Ei+4PyuldPDcf3UKgO/04cDM1oE=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
